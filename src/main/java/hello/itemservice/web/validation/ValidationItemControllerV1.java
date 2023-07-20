@@ -5,10 +5,13 @@ import hello.itemservice.domain.item.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/validation/v1/items")
@@ -39,6 +42,15 @@ public class ValidationItemControllerV1 {
 
     @PostMapping("/add")
     public String addItem(@ModelAttribute Item item, RedirectAttributes redirectAttributes) {
+        //어떤 오류가 있는지 담아줄 객체가 필요하다
+        //검증 오류 결과를 보관
+        Map<String,String> errors =new HashMap<>();
+        //검증로직
+        if(!StringUtils.hasText(item.getItemName())){//만약 아이템네임에 글자가 냐고 물어보는 로직
+
+        }
+
+
         Item savedItem = itemRepository.save(item);
         redirectAttributes.addAttribute("itemId", savedItem.getId());
         redirectAttributes.addAttribute("status", true);
